@@ -8,8 +8,8 @@ services:
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
   catalogdb:
     image: mongo
-
-
+  mongo-express-gui:
+    image: mongo-express
 volumes:
   mongo_data:
     
