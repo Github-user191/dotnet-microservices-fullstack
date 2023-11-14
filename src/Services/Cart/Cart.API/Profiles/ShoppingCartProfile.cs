@@ -7,6 +7,8 @@ namespace Cart.API.Profiles {
         
         public ShoppingCartProfile() {
             CreateMap<ShoppingCart, ShoppingCartReadDto>();
+            CreateMap<ShoppingCart, ShoppingCartReadDto>();
+            CreateMap<ShoppingCart, ShoppingCartUpdateDto>();
         }
     }
 }
