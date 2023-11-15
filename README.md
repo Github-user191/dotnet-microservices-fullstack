@@ -2,11 +2,11 @@
 
 Catalog Microservice
 - MongoDB
-  - <commands>
+  - docker run -d -p 27017:27017 --name catalogdb mongo
 
 Cart Microservice
 - Redis
-  - <commands>
+  - docker run -d -p 6379:6379 --name cartdb redis
 
 Discount Microservice
 - Postgres
