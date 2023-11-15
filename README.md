@@ -3,6 +3,8 @@
 Catalog Microservice
 - MongoDB
   - docker run -d -p 27017:27017 --name catalogdb mongo
+- Mongo Express GUI
+  - admin/pass
 
 Cart Microservice
 - Redis
