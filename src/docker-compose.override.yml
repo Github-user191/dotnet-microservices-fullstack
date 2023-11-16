@@ -27,4 +27,28 @@ services:
     depends_on:
       - catalogdb
     ports:
-      - "8081:8081"  
+      - "8081:8081"
+  cart.api:
+    container_name: cart.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "RedisCacheSettings:ConnectionString=cartdb:6379"
+    depends_on:
+      - cartdb
+    ports:
+      # 8001 on host to 80 on docker
+      - "8001:80"
+  cartdb:
+    container_name: cartdb
+    restart: always
+    ports:
+      - "6379:6379"
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8080:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data 

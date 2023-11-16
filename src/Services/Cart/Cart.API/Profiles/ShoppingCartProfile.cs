@@ -6,9 +6,12 @@ namespace Cart.API.Profiles {
     public class ShoppingCartProfile : Profile {
         
         public ShoppingCartProfile() {
-            CreateMap<ShoppingCart, ShoppingCartReadDto>();
-            CreateMap<ShoppingCart, ShoppingCartReadDto>();
+            // When we want to convert a DTO to a model
             CreateMap<ShoppingCart, ShoppingCartUpdateDto>();
+            CreateMap<ShoppingCart, ShoppingCartReadDto>();
+            // When we want to convert a model to an update DTO
+            CreateMap<ShoppingCartUpdateDto, ShoppingCart>();
+
         }
     }
 }
