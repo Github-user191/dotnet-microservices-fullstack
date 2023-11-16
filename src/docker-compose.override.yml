@@ -19,7 +19,7 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-  mongo-express-gui:
+  mongo-express:
     container_name: mongo-express
     environment:
       - ME_CONFIG_OPTIONS_EDITORTHEME=ambiance
@@ -43,6 +43,17 @@ services:
     restart: always
     ports:
       - "6379:6379"
+  discountdb:
+    container_name: discountdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=DiscountDB
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
   portainer:
     container_name: portainer
     restart: always
