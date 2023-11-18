@@ -45,7 +45,7 @@ namespace Discount.API.Repositories {
                 }
             );
 
-            return affectedRows == 0;
+            return affectedRows != 0;
         }
 
         public async Task<bool> UpdateDiscount(Coupon coupon) {
@@ -53,7 +53,7 @@ namespace Discount.API.Repositories {
             using var connection = new NpgsqlConnection(_configuration["DatabaseSettings:ConnectionString"]);
 
             var affectedRows = await connection.ExecuteAsync(
-                "UPDATE Coupon SET ProductName=@ProductName, Description=@Description, Amount=@Amount WHERE Id = @Id)",
+                "UPDATE Coupon SET ProductName=@ProductName, Description=@Description, Amount=@Amount WHERE Id = @Id",
                 new Coupon {
                     Id = coupon.Id,
                     ProductName = coupon.ProductName,
@@ -62,7 +62,10 @@ namespace Discount.API.Repositories {
                 }
             );
 
-            return affectedRows == 0;
+            Console.WriteLine($"--> Update affected rows: {affectedRows}");
+
+        
+            return affectedRows != 0;
         }
 
         public async Task<bool> DeleteDiscount(string productName) {
@@ -74,7 +77,7 @@ namespace Discount.API.Repositories {
                 new {ProductName = productName}
             );
 
-            return affectedRows == 0;
+            return affectedRows != 0;
         }
 
     }

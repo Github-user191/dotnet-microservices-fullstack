@@ -46,6 +46,19 @@ services:
     image: redis:alpine # lightweight version
 
   # DISCOUNT API AND DB
+  discount.api:
+    container_name: discount.api
+    image: ${DOCKER_REGISTRY-}discountapi
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDB;User Id=admin;Password=password123;"
+    depends_on:
+      - discountdb
+    ports:
+      - "8002:80" # 8002 on host to 80 on docker
   discountdb:
     image: postgres
     container_name: discountdb
@@ -62,7 +75,7 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@aspnetrun.com
+      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=password123
     restart: always
     ports:

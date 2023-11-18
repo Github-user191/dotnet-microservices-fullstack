@@ -1,7 +1,13 @@
+using Discount.API.Data;
+using Discount.API.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // Register AutoMapper DTO
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -11,6 +17,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if(app.Environment.IsDevelopment()) {
+    app.MigrateDatabase<Program>();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -19,4 +26,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//PrepDB.PrepPopulation(app);
 app.Run();
