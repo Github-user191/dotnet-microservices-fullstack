@@ -1,9 +1,9 @@
-using Discount.API.Entities;
-using Discount.API.Repositories;
+using Discount.Grpc.Entities;
+using Discount.Grpc.Repositories;
 using Npgsql;
 
-namespace Discount.API.Data {
-    public static class PrepDB {
+namespace Discount.Grpc.Data {
+    public static class MigrateDbExtention {
         public static WebApplication MigrateDatabase<T>(this WebApplication app, int? retry = 0) {
             var retryForAvailability = retry.Value;
 

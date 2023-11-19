@@ -7,10 +7,10 @@ namespace Cart.API.Profiles {
         
         public ShoppingCartProfile() {
             // When we want to convert a DTO to a model
-            CreateMap<ShoppingCart, ShoppingCartUpdateDto>();
-            CreateMap<ShoppingCart, ShoppingCartReadDto>();
+            CreateMap<ShoppingCart, ShoppingCartUpdateDto>().ReverseMap();;
+            CreateMap<ShoppingCart, ShoppingCartReadDto>().ReverseMap();;
             // When we want to convert a model to an update DTO
-            CreateMap<ShoppingCartUpdateDto, ShoppingCart>();
+            CreateMap<ShoppingCartUpdateDto, ShoppingCart>().ReverseMap();;
 
         }
     }

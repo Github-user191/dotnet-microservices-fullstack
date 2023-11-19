@@ -6,9 +6,9 @@ namespace Catalog.API.Profiles {
     public class ProductsProfile : Profile {
 
         public ProductsProfile() {
-            CreateMap<Product, ProductReadDto>();
-            CreateMap<ProductCreateDto, Product>();
-            CreateMap<ProductUpdateDto, Product>();
+            CreateMap<Product, ProductReadDto>().ReverseMap();;
+            CreateMap<ProductCreateDto, Product>().ReverseMap();;
+            CreateMap<ProductUpdateDto, Product>().ReverseMap();;
         }
     }
 }
