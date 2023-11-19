@@ -1,21 +1,22 @@
-using Grpc.Core;
 using Discount.Grpc;
+using Grpc.Core;
 
-namespace Discount.Grpc.Services;
-
-public class GreeterService : Greeter.GreeterBase
+namespace Discount.Grpc.Services
 {
-    private readonly ILogger<GreeterService> _logger;
-    public GreeterService(ILogger<GreeterService> logger)
+    public class GreeterService : Greeter.GreeterBase
     {
-        _logger = logger;
-    }
-
-    public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
-    {
-        return Task.FromResult(new HelloReply
+        private readonly ILogger<GreeterService> _logger;
+        public GreeterService(ILogger<GreeterService> logger)
         {
-            Message = "Hello " + request.Name
-        });
+            _logger = logger;
+        }
+
+        public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
+        {
+            return Task.FromResult(new HelloReply
+            {
+                Message = "Hello " + request.Name
+            });
+        }
     }
 }
