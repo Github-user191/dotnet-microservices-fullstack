@@ -2,6 +2,7 @@ using AutoMapper;
 using Cart.API.Dtos;
 using Cart.API.Entities;
 using Cart.API.Repositories;
+using Cart.API.SyncDataServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cart.API.Controllers {
@@ -9,12 +10,14 @@ namespace Cart.API.Controllers {
     [ApiController]
     [Route("/api/v1/[controller]")]
     public class CartController : ControllerBase {
-        private ICartRepository _repository;
-        private IMapper _mapper;
+        private readonly ICartRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly IDiscountGrpcService _discountGrpcService;
 
-        public CartController(ICartRepository repository, IMapper mapper) {
+        public CartController(ICartRepository repository, IMapper mapper, IDiscountGrpcService discountGrpcService) {
             _repository = repository;
             _mapper = mapper;
+            _discountGrpcService = discountGrpcService;
         }
 
         [HttpGet("{userName}", Name = "GetBasket")]
@@ -31,6 +34,15 @@ namespace Cart.API.Controllers {
 
         [HttpPost]
         public async Task<ActionResult<ShoppingCartUpdateDto>> UpdateCart([FromBody] ShoppingCartUpdateDto cart) {
+            
+            // Communicate with Discount gRPC to calculate latest product prices
+            foreach(var item in cart.Items) {
+                // For every cart item, perform inter service gRPC call
+                var coupon = await _discountGrpcService.GetDiscount(item.ProductName);
+                // Deduct coupon value from each item
+                item.Price -= coupon.Amount;
+            }
+            
             return Ok(await _repository.UpdateCart(_mapper.Map<ShoppingCart>(cart)));
         }
 

@@ -1,4 +1,6 @@
 using Cart.API.Repositories;
+using Cart.API.SyncDataServices;
+using Discount.Grpc.Protos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+
+// gRPC client and server configuration
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opts => {
+    // Uri to connect to gRPC server (Discount gRPC Service URL)
+    opts.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]);
+});
+
+builder.Services.AddScoped<DiscountGrpcService>();
+
+
+builder.Services.AddScoped<IDiscountGrpcService, DiscountGrpcService>();
 builder.Services.AddAutoMapper(typeof(Program)); // Register AutoMapper DTO
 builder.Services.AddStackExchangeRedisCache(opts => {
     opts.Configuration = builder.Configuration["RedisCacheSettings:ConnectionString"];
