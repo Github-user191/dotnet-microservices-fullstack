@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -7,17 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Contracts\Profiles\**" />
+      <EmbeddedResource Remove="Contracts\Profiles\**" />
+      <None Remove="Contracts\Profiles\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
-    </ItemGroup>
+	</ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Behaviours\" />
-      <Folder Include="Contracts\Profiles\" />
-      <Folder Include="Features\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
+	    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+	    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+	    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.25" />
+	    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+	    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>
